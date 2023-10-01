@@ -1,3 +1,4 @@
+import { Cart } from "@/components/Cart";
 import { ShoppingCart } from "@phosphor-icons/react";
 import { Link, Outlet } from "react-router-dom";
 
@@ -10,10 +11,7 @@ export function RootLayout() {
             <Link to="/"><h1 className="uppercase font-black text-2xl">Planet Store</h1></Link>
           </div>
           <div>
-            <button type="button" className="relative">
-              <ShoppingCart size={24} className="text-gray-800" />
-              <span className="flex items-center justify-center absolute w-5 h-5 bottom-[-10px] right-[-8px] bg-gray-600 rounded-full text-white text-xs">0</span>
-            </button>
+            <Cart />
           </div>
         </div>
       </div>
