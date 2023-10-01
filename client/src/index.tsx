@@ -5,16 +5,22 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import './index.css';
 import { HomePage } from './pages/HomePage';
+import { RootLayout } from './layouts/RootLayout';
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <HomePage />,
-  },
-  {
-    path: "product/:slug",
-    element: <div>Product</div>,
-  },
+    element: <RootLayout />,
+    children: [
+      {
+        path: "/",
+        element: <HomePage />,
+      },
+      {
+        path: "product/:slug",
+        element: <div>Product</div>,
+      },
+    ]
+  }
 ]);
 
 const root = ReactDOM.createRoot(

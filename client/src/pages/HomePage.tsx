@@ -10,5 +10,12 @@ export function HomePage() {
 
   if(isLoading) return <div>Carregando...</div>
   
-  return <ProductList products={data!} />
+  return (
+    <div>
+      <div>
+        <h2 className="text-xl font-semibold text-gray-950">Clothes</h2>
+      </div>
+      <ProductList products={data!} />
+    </div>
+  )
 }

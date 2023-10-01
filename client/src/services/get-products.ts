@@ -7,6 +7,7 @@ export const schema = z.array(
   z.object({
     name: z.string(),
     description: z.string(),
+    image: z.string().url(),
     slug: z.string(),
     id: z.string(),
     imageUrl: z.string(),
