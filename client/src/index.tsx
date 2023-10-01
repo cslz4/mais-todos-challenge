@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './index.css';
 import { HomePage } from './pages/HomePage';
 import { RootLayout } from './layouts/RootLayout';
+import { ProductPage } from './pages/ProductPage';
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
       },
       {
         path: "product/:slug",
-        element: <div>Product</div>,
+        element: <ProductPage />
       },
     ]
   }

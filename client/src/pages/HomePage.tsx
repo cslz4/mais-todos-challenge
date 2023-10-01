@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 export function HomePage() {
   const { data, isLoading } = useQuery({
     queryKey: ['products'],
-    queryFn: getProducts
+    queryFn: () => getProducts()
   })
 
   if(isLoading) return <div>Carregando...</div>
