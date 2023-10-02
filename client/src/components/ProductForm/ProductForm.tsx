@@ -19,7 +19,7 @@ function slugify(input: string | undefined): string {
 const formSchema = z.object({
   slug: z.string().trim().min(3),
   name: z.string().trim().min(3),
-  image: z.instanceof(FileList),
+  image: z.object({}),
   description: z.string().trim().min(3),
   price: z.preprocess(
     (a) => Number(a),
