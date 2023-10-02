@@ -11,6 +11,7 @@ import { SuccessPage } from './pages/SuccessPage';
 import { AddProductPage } from './pages/AddProductPage';
 
 import './index.css';
+import { EditProductPage } from './pages/EditProductPage';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/add-product",
         element: <AddProductPage />
+      },
+      {
+        path: "/admin/edit-product/:productSlug",
+        element: <EditProductPage />
       },
     ]
   }

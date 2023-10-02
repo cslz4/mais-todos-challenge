@@ -1,6 +1,8 @@
 import { Product } from "@/entities/product"
 import { useCart } from "@/store"
 import { formatCurrency } from "@/utils/format-currency/format-currency"
+import { Pencil } from "@phosphor-icons/react/dist/ssr"
+import { Link } from "react-router-dom"
 
 type ProductDetailsProps = {
   product: Product
@@ -34,6 +36,13 @@ export function ProductDetails({ product }: ProductDetailsProps) {
                 Adicionar ao carrinho
               </button>
             )}
+
+          <div className="pt-8">
+            <Link className="underline flex gap-2 items-center" to={`/admin/edit-product/${product.slug}`}>
+              <Pencil size={16} />
+              <span>Editar produto</span>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

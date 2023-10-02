@@ -108,6 +108,7 @@ app.get('/product/:slug', async function handler (request, res) {
 
   if(!product) {
     res.status(404)
+    res.send()
   } else {
     res.status(200)
     res.send(ProductMapper.toDTO(product))
@@ -132,7 +133,10 @@ app.post('/product', upload.single('image'), async function handler (request, re
       slug: z.string(),
       name: z.string(),
       description: z.string(),
-      price: z.number()
+      price: z.preprocess(
+        (a) => Number(a),
+        z.number().positive()
+      )
     })
 
     const { slug, name, description, price } = bodySchema.parse(request.body)
@@ -142,27 +146,75 @@ app.post('/product', upload.single('image'), async function handler (request, re
       id: randomUUID(),
       slug,
       name,
-      imageUrl: `http://localhost:3000/images/${file.filename}`,
+      imageUrl: `http://localhost:3001/images/${file.filename}`,
       description,
       price
     })
 
-    const exists = await productRepo.exists(product.slug)
 
-    if (exists) {
+    productRepo.save(product)
+    res.status(201)
+    res.send()
+  } catch(err) {
+    console.log(err)
+    res.status(500)
+    res.send()
+  }
+})
+
+app.put('/product/:productSlug', upload.single('image'), async function handler (request, res) {
+  const MAX_FILE_SIZE = 5000000
+  const fileSchema = z.object({
+    fieldname: z.string(),
+    originalname: z.string(),
+    encoding: z.string(),
+    mimetype: z.string(),
+    destination: z.string(),
+    filename: z.string(),
+    path: z.string(),
+    size: z.number().refine(size => size <= MAX_FILE_SIZE)
+  })
+
+  try {
+    const bodySchema = z.object({
+      slug: z.string(),
+      name: z.string(),
+      description: z.string(),
+      price: z.preprocess(
+        (a) => Number(a),
+        z.number().positive()
+      )
+    })
+
+    const { productSlug } = request.params
+    const { slug, name, description, price } = bodySchema.parse(request.body)
+    const file = fileSchema.parse(request.file)
+
+
+    const product = await productRepo.getProductByProductSlug(productSlug)
+
+    if (!product) {
       res.status(409)
       res.send()
       return
     }
 
+    product.setSlug(slug)
+    product.setName(name)
+    product.setDescription(description)
+    product.setPrice(price)
+    product.setImageUrl(`http://localhost:3001/images/${file.filename}`),
+
     productRepo.save(product)
-    res.status(201)
+    res.status(200)
     res.send()
-  } catch {
+  } catch(err) {
+    console.log(err)
     res.status(500)
     res.send()
   }
 })
+
 
 app.delete('/product/:slug', async function handler (request, res) {
   const paramsSchema = z.object({

@@ -30,7 +30,7 @@ const formSchema = z.object({
 export type ProductFormValues = z.infer<typeof formSchema>
 
 type ProductFormProps = {
-  defaultValues?: ProductFormValues
+  defaultValues?: Partial<ProductFormValues>
   onSubmit: (values: ProductFormValues) => Promise<void>
 }
 
