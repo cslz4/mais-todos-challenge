@@ -29,10 +29,10 @@ const productRepo = new InMemoryProductRepo()
 const products: Product[] = [
   new Product({
     id: '1',
-    name: 'Midnight Elegance Bonnet',
-    description: 'Our Midnight Elegance Bonnet combines style and comfort. Crafted with soft, black fabric, this bonnet is perfect for protecting your hair while adding a touch of sophistication to your bedtime routine or everyday look. Sleep in style and wake up with beautiful hair.',
+    name: 'Midnight Glasses',
+    description: 'Our Midnight Glasses combines style and comfort.',
     slug: 'midnight-elegance-bonnet',
-    imageUrl: `${url}/images/bonnet-black.jpg`,
+    imageUrl: `${url}/images/black-sun-glasses.webp`,
     price: 19.99,
   }),
   new Product({
@@ -48,7 +48,7 @@ const products: Product[] = [
     name: 'Raven Shadow Shorts',
     description: 'Embrace the casual charm of our Raven Shadow Shorts. These black shorts are perfect for active days or leisurely strolls. They offer a flattering fit and are made with breathable fabric, ensuring you stay comfortable and stylish during any activity.',
     slug: 'raven-shadow-shorts',
-    imageUrl: `${url}/images/shorts-black.jpg`,
+    imageUrl: `${url}/images/shorts-black.png`,
     price: 39.99,
   }),
   new Product({
@@ -88,7 +88,6 @@ app.listen(port, () => {
 app.get('/product', async function handler (_req, reply) {
   const products = await productRepo.getProducts()
 
-  reply.status(200)
   reply.send(products.map(product => ProductMapper.toDTO(product)))
 })
 
@@ -101,14 +100,10 @@ app.get('/product/:slug', async function handler (request, reply) {
 
   if(!product) {
     reply.status(404)
-    reply.send()
-
-    return
+  } else {
+    reply.status(200)
+    reply.send(ProductMapper.toDTO(product))
   }
-
-  reply.status(200)
-  reply.json(ProductMapper.toDTO(product))
-  reply.send()
 })
 
 app.post('/product', upload.single('image'), async function handler (request, reply) {
