@@ -39,17 +39,20 @@ export function ProductForm({ defaultValues, onSubmit }: ProductFormProps) {
     resolver: zodResolver(formSchema),
     defaultValues
   })
+  const isEditing = !!defaultValues
 
   const nameValue = watch('name')
 
   useEffect(() => {
+    if(isEditing) return
+
     setValue('slug', slugify(nameValue))
-  }, [nameValue, setValue])
+  }, [ isEditing, nameValue, setValue])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       <Input label="Nome" placeholder="Digite um nome..." {...register('name')} error={errors.name?.message} />
-      <Input label="Slug" placeholder="Digite um slug..." {...register('slug')} error={errors.slug?.message} />
+      <Input label="Slug" placeholder="Digite um slug..." disabled={isEditing} {...register('slug')} error={errors.slug?.message} />
       <Input label="Descrição" placeholder="Digite uma descrição..." {...register('description')} error={errors.description?.message} />
       <Input type="file" label="Imagem" accept="image/png, image/jpeg" {...register('image')} error={errors.image?.message} />
       <Input type="number" step="0.01" label="Valor" placeholder="Digite um valor..." {...register('price')} error={errors.price?.message} />

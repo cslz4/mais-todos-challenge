@@ -151,7 +151,6 @@ app.post('/product', upload.single('image'), async function handler (request, re
       price
     })
 
-
     productRepo.save(product)
     res.status(201)
     res.send()
@@ -173,7 +172,7 @@ app.put('/product/:productSlug', upload.single('image'), async function handler 
     filename: z.string(),
     path: z.string(),
     size: z.number().refine(size => size <= MAX_FILE_SIZE)
-  })
+  }).optional()
 
   try {
     const bodySchema = z.object({
@@ -186,11 +185,11 @@ app.put('/product/:productSlug', upload.single('image'), async function handler 
       )
     })
 
+
     const { productSlug } = request.params
     const { slug, name, description, price } = bodySchema.parse(request.body)
+
     const file = fileSchema.parse(request.file)
-
-
     const product = await productRepo.getProductByProductSlug(productSlug)
 
     if (!product) {
@@ -199,11 +198,14 @@ app.put('/product/:productSlug', upload.single('image'), async function handler 
       return
     }
 
-    product.setSlug(slug)
+    // product.setSlug(slug)
     product.setName(name)
     product.setDescription(description)
     product.setPrice(price)
-    product.setImageUrl(`http://localhost:3001/images/${file.filename}`),
+
+    if(file) {
+      product.setImageUrl(`http://localhost:3001/images/${file.filename}`)
+    }
 
     productRepo.save(product)
     res.status(200)
