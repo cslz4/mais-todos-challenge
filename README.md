@@ -2,6 +2,8 @@
 
 Projeto desenvolvido em React para o Challenge da Mais Todos (https://github.com/MaisTodos/challenge-frontend-react)
 
+![planet store](https://github.com/cslz4/mais-todos-challenge/blob/main/store.png?raw=true)
+
 ## Bibliotecas utilizadas
 
 - **axios** (^1.5.1): Uma biblioteca JavaScript para fazer requisições HTTP no navegador e no Node.js. É amplamente utilizada para realizar solicitações de API de forma eficiente.
