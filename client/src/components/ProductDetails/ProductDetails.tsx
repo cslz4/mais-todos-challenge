@@ -16,11 +16,11 @@ export function ProductDetails({ product }: ProductDetailsProps) {
       </div>
 
       <div>
-        <h1 className="text-gray-600 text-6xl uppercase font-bold tracking-widest">{product.name}</h1>
+        <h1 className="text-gray-600 text-5xl uppercase font-bold tracking-widest">{product.name}</h1>
         <p className="pt-8 text-gray-400">
           {product.description}
         </p>
-        <div className="text-gray-400 text-4xl pt-8">
+        <div className="text-gray-800 text-xl pt-8 uppercase">
           {formatCurrency(product.price)}
         </div>
 
