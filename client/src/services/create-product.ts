@@ -1,6 +1,6 @@
 import { api } from "@/config/api";
 
-type CreateProductProps = {
+export type CreateProductProps = {
   description: string
   slug: string
   name: string

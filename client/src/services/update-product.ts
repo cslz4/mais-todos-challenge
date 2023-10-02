@@ -6,7 +6,7 @@ type UpdateProductProps = {
   slug: string
   name: string
   price: number
-  image: FileList
+  image?: any
 }
 
 export async function updateProduct({ image, oldSlug, ...props }: UpdateProductProps): Promise<void> {

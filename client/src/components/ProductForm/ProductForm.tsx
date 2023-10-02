@@ -19,7 +19,7 @@ function slugify(input: string | undefined): string {
 const formSchema = z.object({
   slug: z.string().trim().min(3),
   name: z.string().trim().min(3),
-  image: z.object({}),
+  image: z.any(),
   description: z.string().trim().min(3),
   price: z.preprocess(
     (a) => Number(a),
@@ -54,7 +54,7 @@ export function ProductForm({ defaultValues, onSubmit }: ProductFormProps) {
       <Input label="Nome" placeholder="Digite um nome..." {...register('name')} error={errors.name?.message} />
       <Input label="Slug" placeholder="Digite um slug..." disabled={isEditing} {...register('slug')} error={errors.slug?.message} />
       <Input label="Descrição" placeholder="Digite uma descrição..." {...register('description')} error={errors.description?.message} />
-      <Input type="file" label="Imagem" accept="image/png, image/jpeg" {...register('image')} error={errors.image?.message} />
+      <Input type="file" label="Imagem" accept="image/png, image/jpeg" {...register('image')} error={errors.image?.message as string} />
       <Input type="number" step="0.01" label="Valor" placeholder="Digite um valor..." {...register('price')} error={errors.price?.message} />
 
       <button type="submit">Enviar</button>
