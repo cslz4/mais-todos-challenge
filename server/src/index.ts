@@ -6,6 +6,11 @@ import { z } from "zod"
 import multer from 'multer'
 import cors from "cors"
 import { ProductMapper } from './mappers/product-mapper'
+import { InMemoryCartRepo } from './repos/in-memory-cart-repo'
+import { Cart } from './entities/cart'
+import { CartMapper } from './mappers/cart-mapper'
+
+const stripe = require('stripe')('sk_test_Ho24N7La5CVDtbmpjc377lJI')
 
 const storage = multer.diskStorage({
   destination: function (_req, _file, cb) {
@@ -24,7 +29,10 @@ const url = `http://localhost:${port}`
 app.use(cors({
   origin: "*" 
 }))
+app.use(express.json());
+
 const productRepo = new InMemoryProductRepo()
+const cartRepo = new InMemoryCartRepo()
 
 const products: Product[] = [
   new Product({
@@ -85,13 +93,13 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
-app.get('/product', async function handler (_req, reply) {
+app.get('/product', async function handler (_req, res) {
   const products = await productRepo.getProducts()
 
-  reply.send(products.map(product => ProductMapper.toDTO(product)))
+  res.send(products.map(product => ProductMapper.toDTO(product)))
 })
 
-app.get('/product/:slug', async function handler (request, reply) {
+app.get('/product/:slug', async function handler (request, res) {
   const paramsSchema = z.object({
     slug: z.string(),
   })
@@ -99,14 +107,14 @@ app.get('/product/:slug', async function handler (request, reply) {
   const product = await productRepo.getProductByProductSlug(params.slug)
 
   if(!product) {
-    reply.status(404)
+    res.status(404)
   } else {
-    reply.status(200)
-    reply.send(ProductMapper.toDTO(product))
+    res.status(200)
+    res.send(ProductMapper.toDTO(product))
   }
 })
 
-app.post('/product', upload.single('image'), async function handler (request, reply) {
+app.post('/product', upload.single('image'), async function handler (request, res) {
   const MAX_FILE_SIZE = 5000000
   const fileSchema = z.object({
     fieldname: z.string(),
@@ -142,21 +150,21 @@ app.post('/product', upload.single('image'), async function handler (request, re
     const exists = await productRepo.exists(product.slug)
 
     if (exists) {
-      reply.status(409)
-      reply.send()
+      res.status(409)
+      res.send()
       return
     }
 
     productRepo.save(product)
-    reply.status(201)
-    reply.send()
+    res.status(201)
+    res.send()
   } catch {
-    reply.status(500)
-    reply.send()
+    res.status(500)
+    res.send()
   }
 })
 
-app.delete('/product/:slug', async function handler (request, reply) {
+app.delete('/product/:slug', async function handler (request, res) {
   const paramsSchema = z.object({
     slug: z.string(),
   })
@@ -166,19 +174,138 @@ app.delete('/product/:slug', async function handler (request, reply) {
     const product = await productRepo.getProductByProductSlug(params.slug)
 
     if(!product) {
-      reply.status(404)
+      res.status(404)
       return
     }
 
     product.delete()
     await productRepo.save(product)
 
-    reply.status(200)
-    reply.send()
+    res.status(200)
+    res.send()
   } catch {
-    reply.status(400)
-    reply.send()
+    res.status(400)
+    res.send()
   }
 })
 
+app.post('/cart', async (_req, res) => {
+  try {
+    const cart = new Cart({
+      id: randomUUID(),
+      products: [],
+    })
+
+    await cartRepo.save(cart)
+
+    res.status(201)
+    res.send(CartMapper.toDTO(cart))
+  } catch(err) {
+    res.status(400)   
+    res.send()
+  }
+})
+
+app.put('/cart', async (req, res) => {
+  const cartParamsSchema = z.object({
+    cartId: z.string(),
+    slugs: z.string().array()
+  })
+
+  try {
+    const { cartId, slugs } = cartParamsSchema.parse(req.body)
+    const cart = await cartRepo.getCartByCartId(cartId)
+
+    if(!cart) {
+      res.status(404)
+      res.send()
+
+      return
+    }
+
+    const products = await Promise.all(
+      slugs.map(productSlug => productRepo.getProductByProductSlug(productSlug))
+    ).then(list => list.filter(Boolean)) as Product[]
+
+    cart.setProducts(products)
+
+    await cartRepo.save(cart)
+
+    res.status(200)
+    res.send(CartMapper.toDTO(cart))
+  } catch(err) {
+    console.log(err)
+    res.status(400)   
+    res.send()
+  }
+})
+
+app.get('/cart/:cartId', async (req, res) => {
+  const cartParamsSchema = z.object({
+    cartId: z.string()
+  })
+
+  try {
+    const { cartId } = cartParamsSchema.parse(req.params)
+    const cart = await cartRepo.getCartByCartId(cartId)
+
+    if(!cart) {
+      res.status(404)
+      res.send()
+
+      return
+    }
+
+    res.status(200)
+    res.send(CartMapper.toDTO(cart))
+  } catch(err) {
+    console.log(err)
+    res.status(400)   
+    res.send()
+  }
+})
+
+
+
+
+app.post('/create-checkout-session', async (req, res) => {
+  const queryParamsSchema = z.object({
+    cartId: z.string()
+  })
+
+  try {
+    const { cartId } = queryParamsSchema.parse(req.query)
+    const cart = await cartRepo.getCartByCartId(cartId)
+
+    if(!cart) {
+      res.status(404)
+      res.send()
+
+      return
+    }
+
+    const session = await stripe.checkout.sessions.create({
+      line_items: cart.products.map(product => ({
+        price_data: {
+          currency: 'BRL',
+          product_data: {
+            name: product.name,
+          },
+          unit_amount: Math.ceil(product.price * 100), // cents
+        },
+        quantity: 1,
+      })),
+      mode: 'payment',
+      success_url: 'http://localhost:3000/success',
+      cancel_url: 'http://localhost:3000',
+    });
+
+    res.redirect(303, session.url);
+  } catch(err) {
+    console.log(err)
+    res.status(400)   
+    res.redirect(303, 'http://localhost:3000');
+    res.send()
+  }
+});
  app.use(express.static('public'));

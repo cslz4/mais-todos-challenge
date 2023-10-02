@@ -7,12 +7,15 @@ export class InMemoryProductRepo implements IProductRepo {
   async exists(slug: string): Promise<boolean> {
     return this.items.has(slug)
   }
+
   async getProducts(): Promise<Product[]> {
     return [...this.items.values()]
   }
+
   async getProductByProductSlug(slug: string): Promise<Product | null> {
     return this.items.get(slug) ?? null
   }
+
   async save(product: Product): Promise<void> {
     if(product.isDeleted) {
       this.items.delete(product.slug)
