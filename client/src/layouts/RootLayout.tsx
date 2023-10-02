@@ -9,7 +9,7 @@ export function RootLayout() {
       <div className="flex items-center fixed w-full inset-y-0 top-0 z-20 bg-white border-b-2 border-b-gray-100 h-20">
         <div className="flex items-center justify-between w-full mx-auto max-w-7xl">
           <div>
-            <Link to="/"><h1 className="uppercase font-black text-2xl">Planet Store</h1></Link>
+            <Link to="/"><h1 className="uppercase font-black text-2xl">Mais Todos Store</h1></Link>
           </div>
           <div className="flex gap-4">
             <ButtonIcon as={Link} to="/admin/add-product">
