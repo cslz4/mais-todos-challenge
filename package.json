@@ -1,0 +1,19 @@
+{
+  "name": "mais-todos-challenge",
+  "version": "1.0.0",
+  "description": "Projeto desenvolvido em React para o Challenge da Mais Todos (https://github.com/MaisTodos/challenge-frontend-react)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cslz4/mais-todos-challenge.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cslz4/mais-todos-challenge/issues"
+  },
+  "homepage": "https://github.com/cslz4/mais-todos-challenge#readme"
+}
