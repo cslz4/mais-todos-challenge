@@ -1,7 +1,7 @@
 import { Product } from "@/entities/product"
 import { useCart } from "@/store"
 import { formatCurrency } from "@/utils/format-currency/format-currency"
-import { Pencil } from "@phosphor-icons/react/dist/ssr"
+import { Pencil } from "@phosphor-icons/react"
 import { Link } from "react-router-dom"
 
 type ProductDetailsProps = {

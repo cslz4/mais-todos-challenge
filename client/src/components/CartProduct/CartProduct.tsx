@@ -20,7 +20,7 @@ export function CartProduct({ product }: CartProductProps) {
         <div className="uppercase text-xs pt-2">{formatCurrency(product.price)}</div>
       </div>
       <div>
-        <button type="button" onClick={() => remove(product.id)}>
+        <button type="button" onClick={() => remove(product.id)} data-testid="remove-button">
           <Trash size={20} className="text-red-500" />
         </button>
       </div>

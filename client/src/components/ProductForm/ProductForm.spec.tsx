@@ -4,13 +4,12 @@ import { waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event";
 import { ProductForm } from "./ProductForm"
 
-
 let onSubmit: jest.Mock<any>
 let file: File;
 
 beforeEach(() => {
   onSubmit = jest.fn()
-  file = new File(["(⌐□_□)"], "example.png", { type: "image/png" });
+  file = new File(["example"], "example.png", { type: "image/png" });
 });
 
 test('submit values correctly', async () => {
@@ -53,6 +52,5 @@ test('generate product slug automatically', async () => {
   userEvent.clear(name)
   userEvent.type(name, "T@-S@H$I^R*T")
   expect(slug).toHaveDisplayValue('t-shirt')
-
 })
 
