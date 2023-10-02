@@ -4,7 +4,8 @@
   "description": "Projeto desenvolvido em React para o Challenge da Mais Todos (https://github.com/MaisTodos/challenge-frontend-react)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepare": "concurrently \"cd client && npm install\" \"cd server && npm install\"",
+    "start": "concurrently \"cd client && npm run start\" \"cd server && npm run start\""
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/cslz4/mais-todos-challenge/issues"
   },
-  "homepage": "https://github.com/cslz4/mais-todos-challenge#readme"
+  "homepage": "https://github.com/cslz4/mais-todos-challenge#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.1"
+  }
 }

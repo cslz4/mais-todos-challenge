@@ -23,7 +23,7 @@ Projeto desenvolvido em React para o Challenge da Mais Todos (https://github.com
 ## Executando o projeto localmente
 
 ```
-npm install
+npm prepare
 npm run start
 ```
 
