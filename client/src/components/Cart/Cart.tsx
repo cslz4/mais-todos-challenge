@@ -5,8 +5,7 @@ import { useState } from "react";
 import { CartProduct } from "../CartProduct";
 
 export function Cart() {
-  const { products, getTotalAmmount } = useCart()
-  const totalAmmount = getTotalAmmount()
+  const { cartId, products, totalAmmount } = useCart()
   const [isCartOpen, setIsCartOpen] = useState(false)
 
   return (
@@ -23,7 +22,7 @@ export function Cart() {
           </button>
         </div>
         <div className="flex flex-col gap-8 pt-8 pb-8">
-          {products.map(product => <CartProduct product={product} />)}
+          {products.map(product => <CartProduct key={product.id} product={product} />)}
         </div>
         <div className="pt-8 sticky bottom-0 bg-white border-t-2 border-t-gray-200">
           <div className="flex justify-end gap-2">
@@ -31,9 +30,11 @@ export function Cart() {
             {formatCurrency(totalAmmount)}
           </div>
           <div className="pt-8">
-            <button className="bg-white hover:bg-gray-100 text-gray-600 text-xl font-semibold py-4 px-6 border border-gray-400 rounded shadow w-full">
-              Checkout
-            </button>
+            <form action={`${process.env.REACT_APP_API_BASE_URL}/create-checkout-session?cartId=${cartId}`} method="POST">
+              <button className="bg-white hover:bg-gray-100 text-gray-600 text-xl font-semibold py-4 px-6 border border-gray-400 rounded shadow w-full">
+                Checkout
+              </button>
+            </form>
           </div>
         </div>
       </div>

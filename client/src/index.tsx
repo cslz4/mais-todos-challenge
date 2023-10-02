@@ -7,6 +7,8 @@ import './index.css';
 import { HomePage } from './pages/HomePage';
 import { RootLayout } from './layouts/RootLayout';
 import { ProductPage } from './pages/ProductPage';
+import { queryClient } from './config/query-client';
+import { SuccessPage } from './pages/SuccessPage';
 
 const router = createBrowserRouter([
   {
@@ -17,8 +19,12 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "product/:slug",
+        path: "/product/:slug",
         element: <ProductPage />
+      },
+      {
+        path: "/success",
+        element: <SuccessPage />
       },
     ]
   }
@@ -27,7 +33,6 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-const queryClient = new QueryClient()
 
 root.render(
   <React.StrictMode>
