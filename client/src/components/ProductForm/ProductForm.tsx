@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useCallback, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -32,9 +32,10 @@ export type ProductFormValues = z.infer<typeof formSchema>
 type ProductFormProps = {
   defaultValues?: Partial<ProductFormValues>
   onSubmit: (values: ProductFormValues) => Promise<void>
+  onDelete?: () => void
 }
 
-export function ProductForm({ defaultValues, onSubmit }: ProductFormProps) {
+export function ProductForm({ defaultValues, onSubmit, onDelete }: ProductFormProps) {
   const { register, watch, setValue, formState: { errors }, handleSubmit } = useForm<ProductFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues
@@ -57,7 +58,10 @@ export function ProductForm({ defaultValues, onSubmit }: ProductFormProps) {
       <Input type="file" label="Imagem" accept="image/png, image/jpeg" {...register('image')} error={errors.image?.message as string} />
       <Input type="number" step="0.01" label="Valor" placeholder="Digite um valor..." {...register('price')} error={errors.price?.message} />
 
-      <button type="submit">Enviar</button>
+      <div className="flex justify-end gap-4 text-lg">
+        <button type="submit">Enviar</button>
+        <button type="button" className="text-red-500" onClick={onDelete}>Deletar</button>
+      </div>
     </form>
   )
 }

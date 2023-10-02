@@ -37,5 +37,5 @@ Acessar qualquer produto da lista e clicar em "Editar produto"
 ```
 ## Deletando um produto
 ```
-Acessar qualquer produto da lista e clicar em "Deletar produto"
+Acessar qualquer produto da lista, clicar em "Editar produto" e depois em "Deletar produto"
 ```

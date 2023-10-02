@@ -15,7 +15,11 @@ export function HomePage() {
       <div>
         <h2 className="text-xl font-semibold text-gray-950">Clothes</h2>
       </div>
-      <ProductList products={data!} />
+      {data && data.length === 0 ? (
+        <div className="pt-8">Nada por aqui, adicione um produto para começar.</div>
+      ) : (
+          <ProductList products={data!} />
+      )}
     </div>
   )
 }

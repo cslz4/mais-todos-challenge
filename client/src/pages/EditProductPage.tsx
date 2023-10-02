@@ -1,4 +1,5 @@
 import { ProductForm, ProductFormValues } from "@/components/ProductForm";
+import { deleteProduct } from "@/services/delete-product";
 import { getProduct } from "@/services/get-product";
 import { updateProduct } from "@/services/update-product";
 import { useQuery } from "@tanstack/react-query";
@@ -22,6 +23,14 @@ export function EditProductPage() {
     navigate("/")
   }, [navigate, productSlug])
 
+  const handleDelete = useCallback(async () => {
+    await deleteProduct({
+      slug: productSlug as string
+    })
+    navigate("/")
+  }, [navigate, productSlug])
+
+
   if( isLoading ) return <div>Carregando...</div>
 
   if( !data ) return <div>Ocorreu um erro.</div>
@@ -33,7 +42,7 @@ export function EditProductPage() {
 
   return (
     <div>
-      <ProductForm onSubmit={handleSubmit} defaultValues={defaultValues} />
+      <ProductForm onSubmit={handleSubmit} onDelete={handleDelete} defaultValues={defaultValues} />
     </div>
   )
 }
