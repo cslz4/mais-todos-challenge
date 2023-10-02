@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
 
-import './index.css';
 import { HomePage } from './pages/HomePage';
 import { RootLayout } from './layouts/RootLayout';
 import { ProductPage } from './pages/ProductPage';
 import { queryClient } from './config/query-client';
 import { SuccessPage } from './pages/SuccessPage';
+import { AddProductPage } from './pages/AddProductPage';
+
+import './index.css';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "/success",
         element: <SuccessPage />
+      },
+      {
+        path: "/admin/add-product",
+        element: <AddProductPage />
       },
     ]
   }

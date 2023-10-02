@@ -1,6 +1,7 @@
+import { ButtonIcon } from "@/components/ButtonIcon";
 import { Cart } from "@/components/Cart";
-import { ShoppingCart } from "@phosphor-icons/react";
 import { Link, Outlet } from "react-router-dom";
+import { Plus } from "@phosphor-icons/react"
 
 export function RootLayout() {
   return (
@@ -10,7 +11,10 @@ export function RootLayout() {
           <div>
             <Link to="/"><h1 className="uppercase font-black text-2xl">Planet Store</h1></Link>
           </div>
-          <div>
+          <div className="flex gap-4">
+            <ButtonIcon as={Link} to="/admin/add-product">
+              <Plus size={24} />
+            </ButtonIcon>
             <Cart />
           </div>
         </div>
