@@ -21,9 +21,11 @@ export function Cart() {
             <X size={24} />
           </button>
         </div>
-        <div className="flex flex-col gap-8 pt-8 pb-8">
+
+        {products && products.length > 0 ? <div className="flex flex-col gap-8 py-8">
           {products.map(product => <CartProduct key={product.id} product={product} />)}
-        </div>
+        </div> : <div className="py-8">Nada por aqui. Adicione produtos para começar.</div>}
+
         <div className="pt-8 sticky bottom-0 bg-white border-t-2 border-t-gray-200">
           <div className="flex justify-end gap-2">
             <span>Total:</span>
