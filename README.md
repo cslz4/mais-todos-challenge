@@ -2,7 +2,7 @@
 
 Projeto desenvolvido em React para o Challenge da Mais Todos (https://github.com/MaisTodos/challenge-frontend-react)
 
-![planet store](https://github.com/cslz4/mais-todos-challenge/blob/main/store.png?raw=true)
+![planet store](https://github.com/cslz4/mais-todos-challenge/blob/main/assets/store.png?raw=true)
 
 ## Bibliotecas utilizadas
 
