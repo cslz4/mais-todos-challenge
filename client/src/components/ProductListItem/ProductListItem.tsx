@@ -22,9 +22,9 @@ export function ProductListItem({ product }: ProductListItemProps) {
         </div>
       </Link>
       {exists(product.id) ? (
-        <button type="button" className="pt-4 underline text-red-500" onClick={() => remove(product.id)}>Remover do carrinho</button>
+        <button type="button" className="pt-4 underline text-red-500 hover:text-red-400" onClick={() => remove(product.id)}>Remover do carrinho</button>
       ) : (
-          <button type="button" className="pt-4 underline" onClick={() => add(product)}>Adicionar ao carrinho</button>
+          <button type="button" className="pt-4 underline text-gray-600 hover:text-gray-400" onClick={() => add(product)}>Adicionar ao carrinho</button>
         )}
     </div>
   )
