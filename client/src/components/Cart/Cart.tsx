@@ -1,4 +1,4 @@
-import { useCart } from "@/hooks";
+import { useCart } from "@/hooks/use-cart";
 import { useStore } from "@/store";
 import { formatCurrency } from "@/utils/format-currency/format-currency";
 import { ShoppingCart, X } from "@phosphor-icons/react";
@@ -7,6 +7,7 @@ import { CartProduct } from "../CartProduct";
 export function Cart() {
   const { cartId, products, totalAmmount } = useCart()
   const { isCartOpen, openCart, closeCart } = useStore()
+  const isCartEmpty = products.length === 0
 
   return (
     <>
@@ -33,7 +34,7 @@ export function Cart() {
           </div>
           <div className="pt-8">
             <form action={`${process.env.REACT_APP_API_BASE_URL}/create-checkout-session?cartId=${cartId}`} method="POST">
-              <button className="bg-white hover:bg-gray-100 text-gray-600 text-xl font-semibold py-4 px-6 border border-gray-400 rounded shadow w-full">
+              <button disabled={isCartEmpty} className="bg-white hover:bg-gray-100 text-gray-600 text-xl font-semibold py-4 px-6 border border-gray-400 rounded shadow w-full disabled:bg-gray-200 disabled:text-gray-400">
                 Checkout
               </button>
             </form>

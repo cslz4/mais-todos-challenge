@@ -1,5 +1,5 @@
 /* eslint-disable testing-library/prefer-screen-queries */
-import * as Store from "@/hooks";
+import * as Store from "@/hooks/use-cart";
 import { customRender } from "@/tests/utils";
 import { fireEvent } from "@testing-library/react";
 import { Cart } from "./Cart";
@@ -32,7 +32,8 @@ beforeEach(() => {
     add: jest.fn(),
     remove: jest.fn(),
     reset: jest.fn(),
-    exists: jest.fn()
+    exists: jest.fn(),
+    isCartEmpty: false
   })
 })
 
@@ -81,10 +82,28 @@ test('displays empty cart message when there are no products in the cart', () =>
     add: jest.fn(),
     remove: jest.fn(),
     reset: jest.fn(),
-    exists: jest.fn()
+    exists: jest.fn(),
+    isCartEmpty: false
   })
 
   const { getByText } = customRender(<Cart />);
   const message = getByText('Nada por aqui. Adicione produtos para começar.');
   expect(message).toBeInTheDocument();
+});
+
+test('disable checkout button if the cart is empty', () => {
+  useCartSpy.mockReturnValue({
+    products: [],
+    cartId: "",
+    totalAmmount: 0,
+    add: jest.fn(),
+    remove: jest.fn(),
+    reset: jest.fn(),
+    exists: jest.fn(),
+    isCartEmpty: true
+  })
+
+  const { getByText } = customRender(<Cart />);
+  const checkoutButton = getByText('Checkout');
+  expect(checkoutButton).toBeDisabled();
 });
