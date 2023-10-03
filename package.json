@@ -4,8 +4,8 @@
   "description": "Projeto desenvolvido em React para o Challenge da Mais Todos (https://github.com/MaisTodos/challenge-frontend-react)",
   "main": "index.js",
   "scripts": {
-    "prepare": "concurrently \"cd client && npm install\" \"cd server && npm install\"",
-    "start": "concurrently \"cd client && npm run start\" \"cd server && npm run start\"",
+    "prepare": "npx concurrently \"cd client && npm install\" \"cd server && npm install\"",
+    "start": "npx concurrently \"cd client && npm run start\" \"cd server && npm run start\"",
     "test": "cd client && npm run test"
   },
   "repository": {
@@ -17,8 +17,5 @@
   "bugs": {
     "url": "https://github.com/cslz4/mais-todos-challenge/issues"
   },
-  "homepage": "https://github.com/cslz4/mais-todos-challenge#readme",
-  "devDependencies": {
-    "concurrently": "^8.2.1"
-  }
+  "homepage": "https://github.com/cslz4/mais-todos-challenge#readme"
 }
