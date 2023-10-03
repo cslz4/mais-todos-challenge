@@ -2,7 +2,7 @@
 
 Projeto desenvolvido em React para o Challenge da Mais Todos (https://github.com/MaisTodos/challenge-frontend-react)
 
-![planet store](https://github.com/cslz4/mais-todos-challenge/blob/main/assets/store.png?raw=true)
+![mais todos store](https://github.com/cslz4/mais-todos-challenge/blob/main/assets/store.png?raw=true)
 
 ## Bibliotecas utilizadas
 
@@ -23,19 +23,34 @@ Projeto desenvolvido em React para o Challenge da Mais Todos (https://github.com
 ## Executando o projeto localmente
 
 ```
-npm prepare
+npm run prepare
 npm run start
+```
+
+# Executando os testes
+```
+npm run test
 ```
 
 ## Adicionando um produto
 ```
 Clicar em "+" no header
 ```
+![adicionar produto](https://github.com/cslz4/mais-todos-challenge/blob/main/assets/add-product.png?raw=true)
 ## Editando um produto
 ```
 Acessar qualquer produto da lista e clicar em "Editar produto"
 ```
+![editar produto](https://github.com/cslz4/mais-todos-challenge/blob/main/assets/edit-product.png?raw=true)
+
 ## Deletando um produto
 ```
 Acessar qualquer produto da lista, clicar em "Editar produto" e depois em "Deletar produto"
+```
+
+## Alguns padrões utilizados
+Em projetos que não utilizam 100% clean arch procuro sempre utilizar padrões dessa arquitetura para facilitar a manutenção, testes, reaproveitamento, etc.
+No exemplo abaixo a funcão de submissão é recebida como prop o que pode ser considerado uma inversão de dependência. Isso torna possível reutlizar o mesmo formulário para edição e adição do produto, apenas trocando a função de submissão.
+```
+  <ProductForm onSubmit={handleSubmit} />
 ```
