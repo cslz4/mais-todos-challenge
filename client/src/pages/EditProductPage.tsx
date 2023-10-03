@@ -30,6 +30,7 @@ export function EditProductPage() {
       slug: productSlug as string
     })
     navigate("/")
+    toast.success('Produto deletado.')
   }, [navigate, productSlug])
 
 
