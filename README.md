@@ -76,3 +76,27 @@ export const ButtonIcon = forwardRef<HTMLButtonElement, ButtonIconProps>(({ chil
   )     
 })
 ```
+
+### Polimorfismo
+Utilizando o mesmo exemplo acima, a prop ``as`` permite alterar a tag renderizada, evitando a duplicação de código em casos que precisamos renderizar um botão como uma âncora por exemplo.
+
+### Optimistic Updates
+Com React Query podemos atualizar de forma Otimista nossa UI, ou seja, refletir de forma imediata uma alteração que ainda está ocorrendo e assim melhorar a experiência do usuário.
+````tsx
+  const { mutate: updateCart } = useMutation({
+    mutationFn: updateCartService,
+    onMutate: async (newCart) => {
+      await queryClient.cancelQueries({ queryKey: queryKey })
+      const previousValue = queryClient.getQueryData(queryKey)
+      queryClient.setQueryData<Cart>(queryKey, (old) => ({...old!, products: newCart.products}))
+
+      return { previousValue }
+    },
+    onError: (_err, _newCart, context) => {
+      queryClient.setQueryData(getCartQueryKey(cartId), context?.previousValue)
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: queryKey })
+    },
+  })
+```
