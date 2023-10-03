@@ -50,7 +50,29 @@ Acessar qualquer produto da lista, clicar em "Editar produto" e depois em "Delet
 
 ## Alguns padrões utilizados
 Em projetos que não utilizam 100% clean arch procuro sempre utilizar padrões dessa arquitetura para facilitar a manutenção, testes, reaproveitamento, etc.
+
+### Inversão de dependência
 No exemplo abaixo a funcão de submissão é recebida como prop o que pode ser considerado uma inversão de dependência. Isso torna possível reutlizar o mesmo formulário para edição e adição do produto, apenas trocando a função de submissão.
-```
+```tsx
   <ProductForm onSubmit={handleSubmit} />
+```
+### Expondo nós da DOM
+Em certos componentes se faz necessário utilizar a função ``forwardRef`` para expor um nó da DOM para um componente pai. Útil em casos que um componente, seja interno ou de biblioteca, adiciona event handlers ao componente filho.
+
+```tsx
+import { forwardRef } from "react";
+
+type ButtonIconProps = {
+  as?: React.ElementType | keyof JSX.IntrinsicElements
+} & React.ComponentProps<any>
+
+export const ButtonIcon = forwardRef<HTMLButtonElement, ButtonIconProps>(({ children, as = "button", ...props }, ref) => {
+  const Component = as
+
+  return  (
+    <Component ref={ref} type="button" {...props}>
+      {children}
+    </Component>
+  )     
+})
 ```
