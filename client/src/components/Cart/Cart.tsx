@@ -1,23 +1,23 @@
 import { useCart } from "@/hooks";
+import { useStore } from "@/store";
 import { formatCurrency } from "@/utils/format-currency/format-currency";
 import { ShoppingCart, X } from "@phosphor-icons/react";
-import { useState } from "react";
 import { CartProduct } from "../CartProduct";
 
 export function Cart() {
   const { cartId, products, totalAmmount } = useCart()
-  const [isCartOpen, setIsCartOpen] = useState(false)
+  const { isCartOpen, openCart, closeCart } = useStore()
 
   return (
     <>
-      <button type="button" className="relative" aria-label="Cart" onClick={() => setIsCartOpen(true)}>
+      <button type="button" className="relative" aria-label="Cart" onClick={openCart}>
         <ShoppingCart size={24} className="text-gray-800" />
         <span className="flex items-center justify-center absolute w-5 h-5 bottom-[-10px] right-[-8px] bg-gray-600 rounded-full text-white text-xs">{products.length}</span>
       </button>
 
       <div data-testid="cart-container" className={`fixed z-30 right-0 top-0 w-96 h-screen bg-white border-l-2 border-l-gray-400 p-8 transition-all overflow-auto ${isCartOpen ? "translate-x-0" : "translate-x-full"}`}>
         <div className="flex justify-end">
-          <button type="button" className="" onClick={() => setIsCartOpen(false)}>
+          <button type="button" className="" onClick={closeCart}>
             <X size={24} aria-label="X" />
           </button>
         </div>

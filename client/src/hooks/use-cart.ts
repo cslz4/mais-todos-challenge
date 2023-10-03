@@ -4,6 +4,7 @@ import { Product } from '@/entities/product'
 import { createCart } from '@/services/create-cart'
 import { getCart } from '@/services/get-cart'
 import { updateCart as updateCartService } from '@/services/update-cart'
+import { useStore } from '@/store'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useLocalStorage } from '@uidotdev/usehooks'
 import { useCallback, useEffect, useMemo } from 'react'
@@ -11,6 +12,7 @@ import { useCallback, useEffect, useMemo } from 'react'
 const getCartQueryKey = (cartId: string) => ['cart', cartId]
 
 const useCart = () => {
+  const { isCartOpen, openCart, closeCart } = useStore()
   const [cartId, setCartId] = useLocalStorage<string>('cartId')
 
   const createNewCart = useCallback(() => {
@@ -58,6 +60,7 @@ const useCart = () => {
   })
 
   const add = useCallback(async (product: Product) => {
+    openCart()
     updateCart({ cartId, products: [...products, product] })
   }, [cartId, products, updateCart])
 
