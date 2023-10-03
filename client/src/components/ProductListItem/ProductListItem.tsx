@@ -1,5 +1,5 @@
 import { Product } from "@/entities/product"
-import { useCart } from "@/hooks"
+import { useCart } from "@/hooks/use-cart"
 import { formatCurrency } from "@/utils/format-currency/format-currency"
 import { Link } from "react-router-dom"
 

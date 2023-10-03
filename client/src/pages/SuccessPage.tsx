@@ -1,4 +1,4 @@
-import { useCart } from "@/hooks";
+import { useCart } from "@/hooks/use-cart";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 

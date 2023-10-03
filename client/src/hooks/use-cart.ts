@@ -13,7 +13,7 @@ import { toast } from 'react-hot-toast'
 const getCartQueryKey = (cartId: string) => ['cart', cartId]
 
 const useCart = () => {
-  const { isCartOpen, openCart, closeCart } = useStore()
+  const { openCart } = useStore()
   const [cartId, setCartId] = useLocalStorage<string>('cartId')
 
   const createNewCart = useCallback(() => {

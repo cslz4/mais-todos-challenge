@@ -1,5 +1,5 @@
 /* eslint-disable testing-library/prefer-screen-queries */
-import * as Store from "@/hooks";
+import * as Store from "@/hooks/use-cart";
 import { customRender } from "@/tests/utils";
 import { fireEvent } from "@testing-library/react";
 import { ProductListItem } from "./ProductListItem";
