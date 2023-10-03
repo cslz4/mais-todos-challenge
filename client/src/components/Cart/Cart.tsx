@@ -1,4 +1,4 @@
-import { useCart } from "@/store";
+import { useCart } from "@/hooks";
 import { formatCurrency } from "@/utils/format-currency/format-currency";
 import { ShoppingCart, X } from "@phosphor-icons/react";
 import { useState } from "react";
