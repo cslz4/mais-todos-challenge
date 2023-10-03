@@ -12,13 +12,13 @@ export function ProductDetails({ product }: ProductDetailsProps) {
   const { add, remove, exists } = useCart()
 
   return (
-    <div className="grid grid-cols-2 gap-16">
-      <div className="w-full bg-slate-100 h-[40rem] p-16">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+      <div className="w-full bg-slate-100 h-[18rem] md:h-[30rem] lg:h-[40rem] p-16">
         <img className="w-full h-full object-scale-down" src={product.imageUrl} alt={product.name} />
       </div>
 
       <div>
-        <h1 className="text-gray-600 text-5xl uppercase font-bold tracking-widest">{product.name}</h1>
+        <h1 className="text-4xl lg:text-5xl text-gray-600 uppercase font-bold tracking-widest">{product.name}</h1>
         <p className="pt-8 text-gray-400">
           {product.description}
         </p>
