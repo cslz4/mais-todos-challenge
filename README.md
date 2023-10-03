@@ -54,7 +54,15 @@ Em projetos que não utilizam 100% clean arch procuro sempre utilizar padrões d
 ### Inversão de dependência
 No exemplo abaixo a funcão de submissão é recebida como prop o que pode ser considerado uma inversão de dependência. Isso torna possível reutlizar o mesmo formulário para edição e adição do produto, apenas trocando a função de submissão.
 ```tsx
-  <ProductForm onSubmit={handleSubmit} />
+  function FormWrapper() {
+    const handleSubmit = (values) => {
+      ...
+    }
+
+    return (
+      <ProductForm onSubmit={handleSubmit} />
+    )
+  }
 ```
 ### Expondo nós da DOM
 Em certos componentes se faz necessário utilizar a função ``forwardRef`` para expor um nó da DOM para um componente pai. Útil em casos que um componente, seja interno ou de biblioteca, adiciona event handlers ao componente filho.
