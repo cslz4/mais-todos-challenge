@@ -1,7 +1,7 @@
 import { api } from "@/config/api";
 import { Cart } from "@/entities/cart";
 
-import { z } from "zod"
+import { z } from "zod";
 
 export const schema = z.object({
   id: z.string(),
@@ -12,15 +12,15 @@ export const schema = z.object({
       slug: z.string(),
       id: z.string(),
       imageUrl: z.string(),
-      price: z.number()
-    })
-  )
-})
+      price: z.number(),
+    }),
+  ),
+});
 
-type ApiResponse = z.infer<typeof schema>
+type ApiResponse = z.infer<typeof schema>;
 
 export async function createCart(): Promise<Cart> {
-  const { data } = await api.post<ApiResponse>(`/cart`)
+  const { data } = await api.post<ApiResponse>(`/cart`);
 
-  return data
+  return data;
 }

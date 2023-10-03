@@ -8,45 +8,53 @@ import { toast } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 
 export function EditProductPage() {
-  const { productSlug } = useParams()
+  const { productSlug } = useParams();
   const { data, isLoading } = useQuery({
-    queryKey: ['product', productSlug],
+    queryKey: ["product", productSlug],
     queryFn: () => getProduct({ slug: productSlug! }),
-    enabled: !!productSlug
-  })
-  const navigate = useNavigate()
+    enabled: !!productSlug,
+  });
+  const navigate = useNavigate();
 
-  const handleSubmit = useCallback(async (values: ProductFormValues) => {
-    await updateProduct({
-      oldSlug: productSlug!,
-      ...values,
-    })
-    navigate(`/product/${values.slug}`)
-    toast.success('Produto alterado.')
-  }, [navigate, productSlug])
+  const handleSubmit = useCallback(
+    async (values: ProductFormValues) => {
+      await updateProduct({
+        oldSlug: productSlug!,
+        ...values,
+      });
+      navigate(`/product/${values.slug}`);
+      toast.success("Produto alterado.");
+    },
+    [navigate, productSlug],
+  );
 
   const handleDelete = useCallback(async () => {
     await deleteProduct({
-      slug: productSlug as string
-    })
-    navigate("/")
-    toast.success('Produto deletado.')
-  }, [navigate, productSlug])
+      slug: productSlug as string,
+    });
+    navigate("/");
+    toast.success("Produto deletado.");
+  }, [navigate, productSlug]);
 
+  if (isLoading) return <div>Carregando...</div>;
 
-  if( isLoading ) return <div>Carregando...</div>
-
-  if( !data ) return <div>Ocorreu um erro.</div>
+  if (!data) return <div>Ocorreu um erro.</div>;
 
   const defaultValues: Partial<ProductFormValues> = {
     ...data,
-    image: undefined
-  }
+    image: undefined,
+  };
 
   return (
     <div>
-      <h2 className="text-2xl font-bold pb-4 text-gray-800">Editar produto "{defaultValues.name}"</h2>
-      <ProductForm onSubmit={handleSubmit} onDelete={handleDelete} defaultValues={defaultValues} />
+      <h2 className="text-2xl font-bold pb-4 text-gray-800">
+        Editar produto "{defaultValues.name}"
+      </h2>
+      <ProductForm
+        onSubmit={handleSubmit}
+        onDelete={handleDelete}
+        defaultValues={defaultValues}
+      />
     </div>
-  )
+  );
 }

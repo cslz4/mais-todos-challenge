@@ -1,17 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { QueryClientProvider } from '@tanstack/react-query';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { QueryClientProvider } from "@tanstack/react-query";
 
-import { HomePage } from './pages/HomePage';
-import { RootLayout } from './layouts/RootLayout';
-import { ProductPage } from './pages/ProductPage';
-import { queryClient } from './config/query-client';
-import { SuccessPage } from './pages/SuccessPage';
-import { AddProductPage } from './pages/AddProductPage';
-import { EditProductPage } from './pages/EditProductPage';
+import { HomePage } from "./pages/HomePage";
+import { RootLayout } from "./layouts/RootLayout";
+import { ProductPage } from "./pages/ProductPage";
+import { queryClient } from "./config/query-client";
+import { SuccessPage } from "./pages/SuccessPage";
+import { AddProductPage } from "./pages/AddProductPage";
+import { EditProductPage } from "./pages/EditProductPage";
 
-import './index.css';
+import "./index.css";
 
 const router = createBrowserRouter([
   {
@@ -23,26 +23,26 @@ const router = createBrowserRouter([
       },
       {
         path: "/product/:slug",
-        element: <ProductPage />
+        element: <ProductPage />,
       },
       {
         path: "/success",
-        element: <SuccessPage />
+        element: <SuccessPage />,
       },
       {
         path: "/admin/add-product",
-        element: <AddProductPage />
+        element: <AddProductPage />,
       },
       {
         path: "/admin/edit-product/:productSlug",
-        element: <EditProductPage />
+        element: <EditProductPage />,
       },
-    ]
-  }
+    ],
+  },
 ]);
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement,
 );
 
 root.render(
@@ -50,5 +50,5 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
     </QueryClientProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

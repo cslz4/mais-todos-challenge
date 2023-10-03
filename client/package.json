@@ -37,7 +37,14 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "plugins": [
+      "react",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": ["error"]
+    }  
   },
   "browserslist": {
     "production": [
@@ -53,6 +60,9 @@
   },
   "devDependencies": {
     "craco-alias": "^3.0.1",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.3",
     "tailwindcss": "^3.3.3"
   }
 }

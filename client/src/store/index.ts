@@ -1,20 +1,18 @@
-import { create } from 'zustand'
-import { devtools } from 'zustand/middleware'
+import { create } from "zustand";
+import { devtools } from "zustand/middleware";
 
 interface StoreState {
-  isCartOpen: boolean
-  openCart: () => void
-  closeCart: () => void
+  isCartOpen: boolean;
+  openCart: () => void;
+  closeCart: () => void;
 }
 
 const useStore = create<StoreState>()(
-  devtools(
-    (set) => ({
-      isCartOpen: false,
-      openCart: () => set(() => ({ isCartOpen: true })),
-      closeCart: () => set(() => ({ isCartOpen: false })),
-    }),
-  )
-)
+  devtools((set) => ({
+    isCartOpen: false,
+    openCart: () => set(() => ({ isCartOpen: true })),
+    closeCart: () => set(() => ({ isCartOpen: false })),
+  })),
+);
 
-export { useStore }
+export { useStore };
