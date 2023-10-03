@@ -64,7 +64,7 @@ const useCart = () => {
     openCart()
     updateCart({ cartId, products: [...products, product] })
     toast.success('Produto adicionado')
-  }, [cartId, products, updateCart])
+  }, [cartId, openCart, products, updateCart])
 
   const remove = useCallback(async (productId: Product["id"]) => {
     updateCart({ cartId, products: [...products.filter(product => product.id !== productId)] })
