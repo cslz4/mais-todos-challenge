@@ -4,6 +4,7 @@ import { getProduct } from "@/services/get-product";
 import { updateProduct } from "@/services/update-product";
 import { useQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
+import { toast } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 
 export function EditProductPage() {
@@ -20,7 +21,8 @@ export function EditProductPage() {
       oldSlug: productSlug!,
       ...values,
     })
-    navigate("/")
+    navigate(`/product/${values.slug}`)
+    toast.success('Produto alterado.')
   }, [navigate, productSlug])
 
   const handleDelete = useCallback(async () => {

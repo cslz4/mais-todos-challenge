@@ -9,9 +9,9 @@ import { ProductPage } from './pages/ProductPage';
 import { queryClient } from './config/query-client';
 import { SuccessPage } from './pages/SuccessPage';
 import { AddProductPage } from './pages/AddProductPage';
+import { EditProductPage } from './pages/EditProductPage';
 
 import './index.css';
-import { EditProductPage } from './pages/EditProductPage';
 
 const router = createBrowserRouter([
   {

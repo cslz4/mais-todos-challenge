@@ -8,6 +8,7 @@ import { useStore } from '@/store'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useLocalStorage } from '@uidotdev/usehooks'
 import { useCallback, useEffect, useMemo } from 'react'
+import { toast } from 'react-hot-toast'
 
 const getCartQueryKey = (cartId: string) => ['cart', cartId]
 
@@ -62,10 +63,12 @@ const useCart = () => {
   const add = useCallback(async (product: Product) => {
     openCart()
     updateCart({ cartId, products: [...products, product] })
+    toast.success('Produto adicionado')
   }, [cartId, products, updateCart])
 
   const remove = useCallback(async (productId: Product["id"]) => {
     updateCart({ cartId, products: [...products.filter(product => product.id !== productId)] })
+    toast.success('Produto removido')
   }, [cartId, products, updateCart])
 
   const reset = useCallback(async () => {
