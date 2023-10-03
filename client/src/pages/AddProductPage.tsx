@@ -11,10 +11,11 @@ export function AddProductPage() {
     createProduct(values as CreateProductProps)
     toast.success(`Produto adicionado.`)
     navigate('/')
-  }, [])
+  }, [navigate])
 
   return (
     <div>
+      <h2 className="text-2xl font-bold pb-4 text-gray-800">Adicionar um produto</h2>
       <ProductForm onSubmit={handleSubmit} />
     </div>
   )

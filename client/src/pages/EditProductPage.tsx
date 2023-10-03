@@ -45,6 +45,7 @@ export function EditProductPage() {
 
   return (
     <div>
+      <h2 className="text-2xl font-bold pb-4 text-gray-800">Editar produto "{defaultValues.name}"</h2>
       <ProductForm onSubmit={handleSubmit} onDelete={handleDelete} defaultValues={defaultValues} />
     </div>
   )
